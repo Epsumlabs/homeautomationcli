@@ -2,9 +2,9 @@ from distutils.core import setup
 
 setup(
     name='homeautomationcli',
-    version='0.0.1',
+    version='0.0.1_Beta',
     packages=['homeautomationcli'],
-    url='',
+    url='https://github.com/Epsumlabs/homeautomationcli',
     license='MIT',
     author='saiprasad',
     entry_points = {'console_scripts':['homeautomationcli=homeautomationcli.command_line:main'],},
@@ -14,5 +14,6 @@ setup(
           'pycrypto',
           'requests'
       ],
-    description='Epsum Labs Home Automation CLI'
+    description='Epsum Labs Home Automation CLI',
+    keywords = ['cli', 'homeautomation', 'IoT'],
 )
