@@ -140,7 +140,8 @@ def module_info(useremail, userpass):
     thingid = sys.stdin.readline()
     thingid = thingid[:-1]
     Authorization = j.dumps({"message": "hello", "thingid": thingid})
-    header = {"USER": useremail, "Authorization": Authorization}
+    cipher = aes.encrypt(Authorization,userpass)
+    header = {"USER": useremail, "Authorization": cipher}
     Getrequest('/thing', header)
 
 
@@ -175,13 +176,16 @@ def module_config(useremail, userpass):
 
 
 # Forgot Password Step-1
-def forgot_1(useremail, userpass):
+def forgot_1(useremail):
     aes = EpsumCryptAES()
     print("Token")
     token = sys.stdin.readline()
     token = token[:-1]
+    print("Enter your phone number : ")
+    phone = sys.stdin.readline()
+    phone = phone[:-1]
     body = j.dumps({"token": token})
-    body = aes.encrypt(body, userpass)
+    body = aes.encrypt(body, phone)
     header = {"USER": useremail}
     Postrequest('/user/forgot1', header, body)
 
@@ -192,13 +196,15 @@ def forgot_2(useremail, userpass):
     print("Token")
     token = sys.stdin.readline()
     token = token[:-1]
-
+    print("Enter your phone number : ")
+    phone = sys.stdin.readline()
+    phone = phone[:-1]
     print("New Password")
     newpassword = sys.stdin.readline()
     newpassword = newpassword[:-1]
 
     body = j.dumps({"newpassword": newpassword, "token": token})
-    body = aes.encrypt(body)
+    body = aes.encrypt(body, phone)
     header = {"USER": useremail}
     Postrequest('/user/forgot2', header, body)
 
@@ -210,7 +216,7 @@ def password_update(useremail, userpass):
     password = sys.stdin.readline()
     password = password[:-1]
     body = j.dumps({"password": password})
-    body = aes.encrypt(body)
+    body = aes.encrypt(body, userpass)
     header = {"USER": useremail}
     Postrequest('/user/update', header, body)
 
@@ -243,7 +249,7 @@ def thingreg_from_base_model():
     thingname = sys.stdin.readline()[:-1]
     print("Base Model: ")
     basemodel = sys.stdin.readline()[:-1]
-    header = {"USER": email}
+    header = {"user": email}
     body = j.dumps({"thingid": thingid, "thingname": thingname, 'basemodel': basemodel})
     aes = EpsumCryptAES()
     body = aes.encrypt(body, password)

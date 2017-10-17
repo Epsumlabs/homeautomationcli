@@ -1,6 +1,7 @@
 import requests
 
-baseurl = "http://192.168.1.112:8080/api"
+baseurl = "http://epsumthings.herokuapp.com/api"
+#baseurl = "http://localhost:8008/api"
 
 
 # Get Request Function

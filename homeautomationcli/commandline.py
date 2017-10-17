@@ -74,7 +74,7 @@ def entry():
             elif choice == 10:
                 module_config(useremail, userpass)
             elif choice == 11:
-                forgot_1(useremail, userpass)
+                forgot_1(useremail)
             elif choice == 12:
                 forgot_2(useremail, userpass)
             elif choice == 13:
